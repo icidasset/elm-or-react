@@ -1,4 +1,4 @@
-module Styles exposing (..)
+module Styles exposing (Styles(..), Variations(..), styles)
 
 import Color exposing (..)
 import Style exposing (..)
@@ -15,7 +15,8 @@ import Variables exposing (..)
 styles : StyleSheet Styles Variations
 styles =
     Style.styleSheet
-        [ Sheet.mix containers
+        [ Sheet.mix basics
+        , Sheet.mix containers
         , Sheet.mix headers
         ]
 
@@ -25,32 +26,45 @@ styles =
 
 
 type Styles
-    = -- Containers
-      Root
+    = -- Basics
+      Black
+    | Bold
+      -- Containers
+    | Root
+    | Slides
       -- Headers
     | Header
     | H1
-      --
-    | NotStyled
+    | H2
+      -- 💀
+    | Zed
 
 
 type Variations
-    = Default
+    = Colored
+      --
+    | Default
 
 
 
--- 💁 Helpful things
+-- Basics
 
 
-type alias Bunch =
-    List (Style Styles Variations)
+basics : List (Style Styles Variations)
+basics =
+    [ --
+      -- Font weights
+      --
+      style Black [ Font.weight 900 ]
+    , style Bold [ Font.weight 700 ]
+    ]
 
 
 
 -- Containers
 
 
-containers : Bunch
+containers : List (Style Styles Variations)
 containers =
     [ --
       -- Root
@@ -58,8 +72,15 @@ containers =
       style Root
         [ Color.background colors.base07
         , Color.text colorDerivatives.text
-        , Font.size (scaled -1)
+        , Font.lineHeight 1.575
+        , Font.size (scaled 1)
         , Font.typeface [ defaultFont, Font.sansSerif ]
+        ]
+    , --
+      -- Slides
+      --
+      style Slides
+        [ cursor "e-resize"
         ]
     ]
 
@@ -68,7 +89,7 @@ containers =
 -- Headers
 
 
-headers : Bunch
+headers : List (Style Styles Variations)
 headers =
     [ --
       -- H1
@@ -77,8 +98,22 @@ headers =
         [ Border.bottom 1
         , Border.solid
         , Color.border colorDerivatives.border
-        , Font.size (scaled 3)
-        , Font.typeface [ headerFont, Font.serif ]
-        , Font.weight 700
+        , Color.text colors.base01
+        , Font.center
+        , Font.size (scaled 5)
+        , Font.typeface [ headerFont, Font.sansSerif ]
+        ]
+    , --
+      -- H2
+      --
+      style H2
+        [ Color.text colors.base05
+        , Font.lineHeight 1.05
+        , Font.size (scaled 14)
+        , Font.typeface [ headerFont, Font.sansSerif ]
+
+        --
+        , variation Colored
+            [ Color.text colors.base08 ]
         ]
     ]

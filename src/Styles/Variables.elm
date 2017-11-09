@@ -11,7 +11,7 @@ import Style.Scale as Scale
 
 scaled : Int -> Float
 scaled =
-    Scale.modular 16 1.25
+    Scale.modular 16 1.125
 
 
 
@@ -40,7 +40,7 @@ colors =
 
 colorDerivatives =
     { border = Color.rgb 243 243 243
-    , text = colors.base00
+    , text = colors.base02
     }
 
 
@@ -52,13 +52,13 @@ defaultFont : Font
 defaultFont =
     Font.importUrl
         { name = "Nunito Sans"
-        , url = "https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,400i,700"
+        , url = "https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,400i,700,900"
         }
 
 
 headerFont : Font
 headerFont =
     Font.importUrl
-        { name = "Playfair Display"
-        , url = "https://fonts.googleapis.com/css?family=Playfair+Display:700"
+        { name = "Permanent Marker"
+        , url = "https://fonts.googleapis.com/css?family=Permanent+Marker"
         }

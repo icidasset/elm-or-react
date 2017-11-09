@@ -8,7 +8,9 @@ import Types exposing (..)
 
 initialModel : Model
 initialModel =
-    {}
+    { slide = 1
+    , title = "Elm or React"
+    }
 
 
 initialCommand : Cmd Msg

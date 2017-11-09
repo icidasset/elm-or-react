@@ -12,4 +12,6 @@ type Msg
 
 
 type alias Model =
-    {}
+    { slide : Int
+    , title : String
+    }
