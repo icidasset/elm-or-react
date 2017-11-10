@@ -27,7 +27,7 @@ html:
 
 elm:
 	@echo "> Compiling Elm"
-	@elm-make $(SRC_DIR)/App/App.elm --output $(BUILD_DIR)/application.js --yes
+	@elm make $(SRC_DIR)/App/App.elm --output $(BUILD_DIR)/application.js --yes
 
 
 #

@@ -12,38 +12,58 @@ import Types exposing (Msg)
 
 content : List (Element Styles Variations Msg)
 content =
-    [ slide_1
-    , slide_2
+    [ """
+      Comparing Elm
+      with React
+      """
+        |> properText
+        |> h2 H2 [ vary Colored True ]
+
+    --
+    --
+    , """
+      From project setup
+      until maintenance
+      """
+        |> properText
+        |> h2 H2 [ vary Colored True ]
+
+    --
+    --
+    , """
+      Disclaimer:
+
+      These are my opinions,
+      feel free to disagree and comment.
+
+      Even if there's only a single thing
+      you agree with, then I'm already happy.
+      """
+        |> properText
+        |> h3 H3 []
+
+    --
+    --
+    , """
+      React
+      ~> Babel + ESLint + Webpack
+
+      Elm
+      ~> Nothing
+      """
+        |> properText
+        |> h3 H3 []
     ]
 
 
-
--- Slide 1
-
-
-slide_1 : Element Styles Variations Msg
-slide_1 =
-    let
-        items =
-            [ text "From "
-            , el Zed [] (text "project setup")
-            , node "br" (text "")
-            , text " until "
-            , el Zed [] (text "maintenance")
-            ]
-    in
-        items
-            |> paragraph Zed []
-            |> h2 H2 [ vary Colored True ]
-
-
-
--- Slide 2
-
-
-slide_2 : Element Styles Variations Msg
-slide_2 =
-    "Slide 2"
-        |> text
-        |> singleton
-        |> paragraph Zed []
+properText : String -> Element Styles Variations Msg
+properText string =
+    string
+        |> String.lines
+        |> List.map String.trim
+        |> List.map Element.text
+        |> List.map List.singleton
+        |> List.map ((::) (Element.node "br" <| text ""))
+        |> List.map List.reverse
+        |> List.concat
+        |> Element.paragraph Zed []

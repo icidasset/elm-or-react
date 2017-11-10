@@ -36,6 +36,7 @@ type Styles
     | Header
     | H1
     | H2
+    | H3
       -- 💀
     | Zed
 
@@ -115,5 +116,14 @@ headers =
         --
         , variation Colored
             [ Color.text colors.base08 ]
+        ]
+    , --
+      -- H3
+      --
+      style H3
+        [ Color.text colors.base05
+        , Font.lineHeight 1.05
+        , Font.size (scaled 10)
+        , Font.typeface [ headerFont, Font.sansSerif ]
         ]
     ]

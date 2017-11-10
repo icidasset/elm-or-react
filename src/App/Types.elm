@@ -6,6 +6,9 @@ module Types exposing (..)
 type Msg
     = -- Navigation
       GoToNextSlide
+    | GoToPreviousSlide
+      -- ...
+    | NoOp
 
 
 
