@@ -2,6 +2,7 @@ module View exposing (entry)
 
 import Element exposing (..)
 import Element.Attributes exposing (..)
+import Element.Events exposing (onClick)
 import Html exposing (Html)
 import Styles exposing (..)
 import Types exposing (..)
@@ -51,7 +52,7 @@ middle model =
             |> List.head
             |> Maybe.withDefault Element.empty
             |> section Zed [ center, verticalCenter ]
-            |> section Slides [ height fill, paddingTop (scaled 4) ]
+            |> section Slides [ height fill, onClick GoToNextSlide, paddingTop (scaled 4) ]
 
 
 

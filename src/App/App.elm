@@ -6,9 +6,9 @@ import Types exposing (..)
 import View
 
 
-main : Program Never Model Msg
+main : Program (Maybe Model) Model Msg
 main =
-    Html.program
+    Html.programWithFlags
         { init = init
         , view = View.entry
         , update = State.update
@@ -16,8 +16,8 @@ main =
         }
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( State.initialModel
+init : Maybe Model -> ( Model, Cmd Msg )
+init maybeModelFromStorage =
+    ( Maybe.withDefault State.initialModel maybeModelFromStorage
     , State.initialCommand
     )

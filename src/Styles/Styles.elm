@@ -98,7 +98,7 @@ headers =
         [ Border.bottom 1
         , Border.solid
         , Color.border colorDerivatives.border
-        , Color.text colors.base01
+        , Color.text (Color.grayscale 0.225)
         , Font.center
         , Font.size (scaled 5)
         , Font.typeface [ headerFont, Font.sansSerif ]

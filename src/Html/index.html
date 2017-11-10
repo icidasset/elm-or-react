@@ -6,6 +6,14 @@
 </head>
 <body>
   <script src="application.js"></script>
-  <script>Elm.App.fullscreen()</script>
+  <script>
+    const key = "model";
+    const mod = JSON.parse(sessionStorage.getItem(key));
+    const app = Elm.App.fullscreen(mod);
+
+    app.ports.saveModel.subscribe(mod => {
+      sessionStorage.setItem(key, JSON.stringify(mod));
+    });
+  </script>
 </body>
 </html>

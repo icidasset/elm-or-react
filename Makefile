@@ -48,4 +48,4 @@ serve:
 
 watch_elm:
 	@echo "> Watching"
-	@watchexec -p -w $(SRC_DIR) --filter *.elm -- make elm
+	@watchexec -p -w $(SRC_DIR) -- make elm

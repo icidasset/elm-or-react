@@ -4,7 +4,8 @@ module Types exposing (..)
 
 
 type Msg
-    = NoOp
+    = -- Navigation
+      GoToNextSlide
 
 
 

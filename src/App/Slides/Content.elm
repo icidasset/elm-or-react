@@ -2,6 +2,7 @@ module Slides.Content exposing (content)
 
 import Element exposing (..)
 import Element.Attributes exposing (..)
+import List exposing (singleton)
 import Styles exposing (..)
 import Types exposing (Msg)
 
@@ -42,4 +43,7 @@ slide_1 =
 
 slide_2 : Element Styles Variations Msg
 slide_2 =
-    empty
+    "Slide 2"
+        |> text
+        |> singleton
+        |> paragraph Zed []
