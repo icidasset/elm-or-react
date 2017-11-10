@@ -1,7 +1,7 @@
-# The Differences Between Elm and React
+# Elm or React
 
 ```shell
-brew install elm                        # Elm v0.18
+brew install elm@0.18.0
 brew install devd
 brew install watchexec
 
