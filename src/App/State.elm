@@ -1,4 +1,4 @@
-module State exposing (initialModel, initialCommand, update, subscriptions)
+module State exposing (..)
 
 import Keyboard
 import Ports
@@ -12,13 +12,22 @@ import Types exposing (..)
 initialModel : Model
 initialModel =
     { slide = 1
-    , title = "Elm or React"
+    , title = startingTitle
     }
 
 
 initialCommand : Cmd Msg
 initialCommand =
     Cmd.none
+
+
+
+-- 💧 / Initial states
+
+
+startingTitle : String
+startingTitle =
+    "Elm or React"
 
 
 
@@ -92,6 +101,10 @@ subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.batch
         [ Keyboard.downs onKeyPress ]
+
+
+
+-- 🌱 / Keyboard
 
 
 onKeyPress : Keyboard.KeyCode -> Msg
