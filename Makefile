@@ -38,7 +38,7 @@ build: clean html elm
 
 
 dev: build
-	@make -j serve watch_elm
+	@make -j serve watch
 
 
 serve:
@@ -46,6 +46,14 @@ serve:
 	@devd --livewatch --quiet --notfound 404.html $(BUILD_DIR)
 
 
-watch_elm:
+watch:
 	@echo "> Watching"
-	@watchexec -p -w $(SRC_DIR) -- make elm
+	@make -j watch_elm watch_html
+
+
+watch_elm:
+	@watchexec -p -w $(SRC_DIR) --filter *.elm -- make elm
+
+
+watch_html:
+	@watchexec -p -w $(SRC_DIR) --filter *.html -- make html

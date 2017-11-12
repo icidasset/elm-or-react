@@ -30,6 +30,7 @@ type Styles
       Black
     | Bold
       -- Containers
+    | Code
     | Root
     | Slides
       -- Headers
@@ -68,14 +69,26 @@ basics =
 containers : List (Style Styles Variations)
 containers =
     [ --
+      -- Code
+      --
+      style Code
+        [ Color.text colors.base06
+        , Font.size (scaled 3)
+        , Font.typeface [ codingFont, Font.monospace ]
+        ]
+    , --
       -- Root
       --
       style Root
-        [ Color.background colors.base07
+        [ Color.background colors.base00
         , Color.text colorDerivatives.text
         , Font.lineHeight 1.575
         , Font.size (scaled 1)
         , Font.typeface [ defaultFont, Font.sansSerif ]
+
+        --
+        , prop "-webkit-font-smoothing" "antialiased"
+        , prop "-moz-font-smoothing" "grayscale"
         ]
     , --
       -- Slides
@@ -99,7 +112,7 @@ headers =
         [ Border.bottom 1
         , Border.solid
         , Color.border colorDerivatives.border
-        , Color.text (Color.grayscale 0.225)
+        , Color.text colorDerivatives.border
         , Font.center
         , Font.size (scaled 5)
         , Font.typeface [ headerFont, Font.sansSerif ]
@@ -110,12 +123,12 @@ headers =
       style H2
         [ Color.text colors.base05
         , Font.lineHeight 1.05
-        , Font.size (scaled 14)
+        , Font.size (scaled 13)
         , Font.typeface [ headerFont, Font.sansSerif ]
 
         --
         , variation Colored
-            [ Color.text colors.base08 ]
+            [ Color.text colors.base0B ]
         ]
     , --
       -- H3
@@ -123,7 +136,7 @@ headers =
       style H3
         [ Color.text colors.base05
         , Font.lineHeight 1.05
-        , Font.size (scaled 10)
+        , Font.size (scaled 9)
         , Font.typeface [ headerFont, Font.sansSerif ]
         ]
     ]

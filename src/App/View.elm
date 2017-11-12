@@ -51,7 +51,6 @@ middle model =
             |> List.drop slideIndex
             |> List.head
             |> Maybe.withDefault Element.empty
-            |> section Zed [ center, verticalCenter ]
             |> section Slides [ height fill, onClick GoToNextSlide, paddingTop (scaled 4) ]
 
 

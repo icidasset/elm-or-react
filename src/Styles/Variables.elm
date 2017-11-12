@@ -39,13 +39,21 @@ colors =
 
 
 colorDerivatives =
-    { border = Color.rgb 243 243 243
-    , text = colors.base02
+    { border = colors.base01
+    , text = colors.base06
     }
 
 
 
 -- Fonts
+
+
+codingFont : Font
+codingFont =
+    Font.importUrl
+        { name = "Hack"
+        , url = "https://cdn.jsdelivr.net/npm/hack-font/build/web/hack-subset.css"
+        }
 
 
 defaultFont : Font

@@ -6,6 +6,7 @@ import List exposing (singleton)
 import Styles exposing (..)
 import SyntaxHighlight
 import Types exposing (Msg)
+import Variables exposing (scaled)
 
 
 -- 🍯
@@ -17,8 +18,7 @@ content =
       Comparing Elm
       with React
       """
-        |> properText
-        |> h2 H2 [ vary Colored True ]
+        |> bigText
 
     --
     --
@@ -26,8 +26,7 @@ content =
       From project setup
       until maintenance
       """
-        |> properText
-        |> h2 H2 [ vary Colored True ]
+        |> bigText
 
     --
     --
@@ -40,8 +39,7 @@ content =
       Even if there's only a single thing
       you agree with, then I'm already happy.
       """
-        |> properText
-        |> h3 H3 []
+        |> regularText
 
     --
     --
@@ -57,27 +55,42 @@ content =
       One or two small libraries
       for HTML & CSS
       """
-        |> properText
-        |> h3 H3 []
+        |> regularText
 
     --
     --
     , """
-      What if I wanted to focus more on
-      the problem I'm trying to solve?
+      # React
+      # =====
 
-      - Immutability
-      - Pure functions
-      - Types (Maybe type)
+      brew install nodejs
 
-      <React>
-      ?
+      npm install react react-dom lodash
+      npm install babel eslint eslint-config-metalab
+      npm install postcss webpack webpack-dev-server
+      npm install loader-a loader-b loader-c ...
 
-      [Elm]
-      Built-in
+      # Elm
+      # ===
+
+      brew install elm
+      brew install devd
+      brew install watchexec
+
+      # Pick one
+      elm package install rtfeldman/elm-css
+      elm package install mdgriffith/style-elements
       """
-        |> properText
-        |> h3 H3 []
+        |> elmCode
+
+    --
+    --
+    , """
+      Elm is easier
+      to setup and has
+      less to configure
+      """
+        |> bigText
 
     --
     --
@@ -91,17 +104,57 @@ content =
       [Elm]
       During compile time
       """
-        |> properText
-        |> h3 H3 []
+        |> regularText
+
+    --
+    --
+    , """
+      Better predictability
+      is a good thing
+      """
+        |> bigText
+
+    --
+    --
+    , """
+      What about refactoring,
+      how easily can I change something?
+
+      <React>
+      With difficulty,
+      you will definitely miss something
+      and probably need new tests.
+
+      [Elm]
+      Continue until the compiler
+      stops complaining and your
+      application will work.
+      """
+        |> regularText
+
+    --
+    --
+    , """
+      Obviously you prefer Elm,
+      so tell me the good and the bad.
+
+      Good:
+      - Immutability
+      - Pure functions (no side effects)
+      - Types (Maybe type instead of undefined/null)
+
+      Bad:
+      - No server-side rendering
+      (soon though, next version)
+      """
+        |> regularText
 
     -- TODO:
     -- Refactoring
     -- https://twitter.com/meb_michael/status/903445435594940416
     -- https://twitter.com/emmatcu/status/891141325814341632
     -- https://twitter.com/billperegoy/status/803366811219664896
-    --
     -- https://twitter.com/availle/status/821783943217344517
-    --
     -- https://twitter.com/marick/status/804090726640472064
     --
     -- Optimizing for performance
@@ -114,10 +167,24 @@ content =
 -- ⚗️
 
 
+bigText : String -> Element Styles Variations Msg
+bigText text =
+    text
+        |> properText
+        |> h2 H2 [ vary Colored True ]
+        |> inTheMiddle
+
+
+inTheMiddle : Element Styles Variations Msg -> Element Styles Variations Msg
+inTheMiddle =
+    section Zed [ center, verticalCenter ]
+
+
 properText : String -> Element Styles Variations Msg
 properText string =
     string
         |> String.lines
+        |> List.drop 1
         |> List.map String.trim
         |> List.map Element.text
         |> List.map List.singleton
@@ -125,6 +192,14 @@ properText string =
         |> List.map List.reverse
         |> List.concat
         |> Element.paragraph Zed []
+
+
+regularText : String -> Element Styles Variations Msg
+regularText text =
+    text
+        |> properText
+        |> h3 H3 []
+        |> inTheMiddle
 
 
 
@@ -136,11 +211,36 @@ code hcode =
     hcode
         |> SyntaxHighlight.toBlockHtml Nothing
         |> Element.html
+        |> inTheMiddle
+        |> section Code [ height fill, padding (scaled 2), width fill ]
+
+
+trimCode : String -> String
+trimCode string =
+    string
+        |> String.lines
+        |> List.drop 1
+        |> List.map String.trim
+        |> String.join "\n"
+
+
+
+-- ⚗️ / Code kinds
 
 
 elmCode : String -> Element Styles Variations Msg
 elmCode string =
     string
+        |> trimCode
         |> SyntaxHighlight.elm
+        |> Result.map code
+        |> Result.withDefault Element.empty
+
+
+javascriptCode : String -> Element Styles Variations Msg
+javascriptCode string =
+    string
+        |> trimCode
+        |> SyntaxHighlight.javascript
         |> Result.map code
         |> Result.withDefault Element.empty
