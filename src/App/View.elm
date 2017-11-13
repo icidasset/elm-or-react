@@ -35,13 +35,11 @@ top : Model -> Element Styles Variations Msg
 top model =
     let
         prev =
-            if model.slide > 1 then
+            navButton
+                (model.slide > 1)
                 "Previous"
-                    |> text
-                    |> el Clickable []
-                    |> h1 H1 [ alignLeft, onClick GoToPreviousSlide ]
-            else
-                empty
+                Left
+                GoToPreviousSlide
 
         title =
             model.title
@@ -49,13 +47,11 @@ top model =
                 |> h1 H1 [ center, paddingBottom (scaled 4), width fill ]
 
         next =
-            if model.slide < List.length Slides.Content.content then
+            navButton
+                (model.slide < List.length Slides.Content.content)
                 "Next"
-                    |> text
-                    |> el Clickable []
-                    |> h1 H1 [ alignRight, onClick GoToNextSlide ]
-            else
-                empty
+                Right
+                GoToNextSlide
     in
         [ title ]
             |> row Zed []
@@ -93,6 +89,29 @@ bottom _ =
 -- Other stuff
 
 
+navButton : Bool -> String -> Alignment -> Msg -> Element Styles Variations Msg
+navButton requirement label alignment msg =
+    if requirement then
+        label
+            |> text
+            |> el Clickable []
+            |> h1 H1
+                [ case alignment of
+                    Left ->
+                        alignLeft
+
+                    Right ->
+                        alignRight
+                , onClick msg
+                ]
+    else
+        empty
+
+
 syntaxTheme : Model -> Element Styles Variations Msg
 syntaxTheme _ =
-    html (Html.node "style" [] [ Html.text SyntaxTheme.theme ])
+    SyntaxTheme.theme
+        |> Html.text
+        |> List.singleton
+        |> Html.node "style" []
+        |> Element.html

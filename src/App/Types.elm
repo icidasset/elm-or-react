@@ -19,3 +19,12 @@ type alias Model =
     { slide : Int
     , title : String
     }
+
+
+
+-- Other
+
+
+type Alignment
+    = Left
+    | Right
