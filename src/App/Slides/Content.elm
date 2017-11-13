@@ -392,7 +392,12 @@ code hcode =
     hcode
         |> SyntaxHighlight.toBlockHtml Nothing
         |> Element.html
-        |> section Code [ height fill, padding (scaled 4), width fill ]
+        |> section Code
+            [ height fill
+            , paddingBottom (scaled 4)
+            , paddingTop (scaled 4)
+            , width fill
+            ]
 
 
 trimCode : String -> String

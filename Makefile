@@ -43,7 +43,7 @@ dev: build
 
 serve:
 	@echo "> Serving"
-	@devd --livewatch --quiet --notfound 404.html $(BUILD_DIR)
+	@devd --livewatch --quiet --notfound 404.html --all $(BUILD_DIR)
 
 
 watch:

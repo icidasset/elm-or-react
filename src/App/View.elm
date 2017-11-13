@@ -77,7 +77,7 @@ middle model =
             |> List.drop slideIndex
             |> List.head
             |> Maybe.withDefault Element.empty
-            |> section Slides [ height fill, padding (scaled 4) ]
+            |> section Slides [ height fill, paddingBottom (scaled 4), paddingTop (scaled 4) ]
 
 
 
