@@ -50,8 +50,8 @@ content =
       Elm is a functional language
       that compiles to javascript.
 
-      Unlike using React,
-      Elm produces almost no runtime errors.
+      Mostly used for client-side
+      applications, just like React.
       """
         |> regularText
 
@@ -164,6 +164,8 @@ content =
         |> javascriptCode
 
     --
+    -- An Elm program will always have a structure
+    -- that is roughly in this form:
     --
     , """
       -- Elm View
@@ -213,8 +215,8 @@ content =
     --
     --
     , """
-      Elm definitely looks
-      simpler & easier
+      Elm is simpler
+      & easier to follow
       """
         |> bigText
 
@@ -231,6 +233,11 @@ content =
       During compile time
       """
         |> regularText
+
+    --
+    --
+    , "https://cdn-images-1.medium.com/max/1600/1*PnXjacg1e5nIQ3v9eO4-MQ.png"
+        |> image
 
     --
     --
@@ -261,6 +268,49 @@ content =
     --
     --
     , """
+      Some quotes:
+
+      > Refactoring in @elmlang gives me the freedom and confidence to make changes like I wouldn't dare in JavaScript. And it always works out!
+      @meb_michael
+
+      > OMG. I'm in love all over again. I thought functional languages were supposed to make users prove their worthiness, not help them.
+      @marick
+
+      > my fav thing about #elmlang is how i can get pulled away in the middle of a refactor and come back hours later and get right back to work
+      @emmatcu
+      """
+        |> regularText
+
+    --
+    --
+    , """
+      Refactoring should be easy,
+      cuz we need to do it a lot.
+      """
+        |> bigText
+
+    --
+    --
+    , """
+      How do I go about optimizing my code?
+      (Please don't re-render every time)
+
+      <React>
+      shouldComponentUpdate
+
+      [Elm]
+      Html.Keyed for lists
+      Html.Lazy for single values
+
+      Very similar, except that
+      keyed lists are used by
+      default in React (because of JSX).
+      """
+        |> regularText
+
+    --
+    --
+    , """
       Obviously you prefer Elm,
       so tell me the good and the bad.
 
@@ -277,17 +327,12 @@ content =
       """
         |> regularText
 
-    -- TODO:
-    -- Refactoring
-    -- https://twitter.com/meb_michael/status/903445435594940416
-    -- https://twitter.com/emmatcu/status/891141325814341632
-    -- https://twitter.com/billperegoy/status/803366811219664896
-    -- https://twitter.com/availle/status/821783943217344517
-    -- https://twitter.com/marick/status/804090726640472064
     --
-    -- Optimizing for performance
-    -- Elm -> Html.lazy & keyed
-    -- React -> ShouldComponentUpdate
+    --
+    , """
+      The End
+      """
+        |> bigText
     ]
 
 
@@ -301,6 +346,14 @@ bigText text =
         |> properText
         |> h2 H2 [ vary Colored True ]
         |> inTheMiddle
+
+
+image : String -> Element Styles Variations Msg
+image url =
+    Element.image
+        Zed
+        [ maxWidth fill ]
+        { caption = "Nice error message", src = url }
 
 
 inTheMiddle : Element Styles Variations Msg -> Element Styles Variations Msg

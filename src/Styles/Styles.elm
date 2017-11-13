@@ -27,14 +27,13 @@ styles =
 
 type Styles
     = -- Basics
-      Black
-    | Bold
+      Clickable
       -- Containers
     | Code
+    | Header
     | Root
     | Slides
       -- Headers
-    | Header
     | H1
     | H2
     | H3
@@ -54,11 +53,11 @@ type Variations
 
 basics : List (Style Styles Variations)
 basics =
-    [ --
-      -- Font weights
-      --
-      style Black [ Font.weight 900 ]
-    , style Bold [ Font.weight 700 ]
+    [ -----------------------------------
+      -- Clickable
+      -----------------------------------
+      style Clickable
+        [ cursor "pointer" ]
     ]
 
 
@@ -68,20 +67,34 @@ basics =
 
 containers : List (Style Styles Variations)
 containers =
-    [ --
+    [ -----------------------------------
       -- Code
-      --
+      -----------------------------------
       style Code
         [ Color.text colors.base06
         , Font.lineHeight 1.425
         , Font.size (scaled 3)
         , Font.typeface [ codingFont, Font.monospace ]
         ]
-    , --
+    , -----------------------------------
+      -- Header
+      -----------------------------------
+      style Header
+        [ Border.bottom 1
+        , Color.border colorDerivatives.border
+
+        --
+        , prop "-webkit-user-select" "none"
+        , prop "-moz-user-select" "none"
+        , prop "-ms-user-select" "none"
+        , prop "user-select" "none"
+        ]
+    , -----------------------------------
       -- Root
-      --
+      ------------------------------------
       style Root
         [ Color.background colors.base00
+        , Color.selection colors.base03
         , Color.text colorDerivatives.text
         , Font.lineHeight 1.575
         , Font.size (scaled 1)
@@ -91,9 +104,9 @@ containers =
         , prop "-webkit-font-smoothing" "antialiased"
         , prop "-moz-font-smoothing" "grayscale"
         ]
-    , --
+    , -----------------------------------
       -- Slides
-      --
+      -----------------------------------
       style Slides
         []
     ]
@@ -105,21 +118,18 @@ containers =
 
 headers : List (Style Styles Variations)
 headers =
-    [ --
+    [ -----------------------------------
       -- H1
-      --
+      -----------------------------------
       style H1
-        [ Border.bottom 1
-        , Border.solid
-        , Color.border colorDerivatives.border
-        , Color.text colors.base01
+        [ Color.text colors.base01
         , Font.center
         , Font.size (scaled 5)
         , Font.typeface [ headerFont, Font.sansSerif ]
         ]
-    , --
+    , -----------------------------------
       -- H2
-      --
+      -----------------------------------
       style H2
         [ Color.text colors.base05
         , Font.lineHeight 1.05
@@ -130,9 +140,9 @@ headers =
         , variation Colored
             [ Color.text colors.base0B ]
         ]
-    , --
+    , -----------------------------------
       -- H3
-      --
+      -----------------------------------
       style H3
         [ Color.text colors.base05
         , Font.lineHeight 1.05

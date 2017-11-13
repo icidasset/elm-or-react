@@ -4,6 +4,7 @@ import Element exposing (..)
 import Element.Attributes exposing (..)
 import Element.Events exposing (onClick)
 import Html exposing (Html)
+import Slides.Content
 import Styles exposing (..)
 import SyntaxTheme
 import Types exposing (..)
@@ -32,10 +33,34 @@ entry model =
 
 top : Model -> Element Styles Variations Msg
 top model =
-    model.title
-        |> text
-        |> h1 H1 [ paddingBottom (scaled 4) ]
-        |> header Zed []
+    let
+        prev =
+            if model.slide > 1 then
+                "Previous"
+                    |> text
+                    |> el Clickable []
+                    |> h1 H1 [ alignLeft, onClick GoToPreviousSlide ]
+            else
+                empty
+
+        title =
+            model.title
+                |> text
+                |> h1 H1 [ center, paddingBottom (scaled 4), width fill ]
+
+        next =
+            if model.slide < List.length Slides.Content.content then
+                "Next"
+                    |> text
+                    |> el Clickable []
+                    |> h1 H1 [ alignRight, onClick GoToNextSlide ]
+            else
+                empty
+    in
+        [ title ]
+            |> row Zed []
+            |> within [ prev, next ]
+            |> header Header []
 
 
 
