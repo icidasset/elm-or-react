@@ -172,7 +172,7 @@ content =
 
       view : Model -> Html Msg
       view model =
-          p
+          Html.p
               [ onClick (ChangeGreeting "👩\x200D🔬") ]
               [ text model.greeting ]
 
@@ -215,8 +215,7 @@ content =
     --
     --
     , """
-      Elm is simpler
-      & easier to follow
+      Elm looks & is simpler
       """
         |> bigText
 
@@ -293,7 +292,7 @@ content =
     --
     , """
       How do I go about optimizing my code?
-      (Please don't re-render every time)
+      (ie. Please don't re-render every time)
 
       <React>
       shouldComponentUpdate
