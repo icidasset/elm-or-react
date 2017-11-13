@@ -73,6 +73,7 @@ containers =
       --
       style Code
         [ Color.text colors.base06
+        , Font.lineHeight 1.425
         , Font.size (scaled 3)
         , Font.typeface [ codingFont, Font.monospace ]
         ]
@@ -94,8 +95,7 @@ containers =
       -- Slides
       --
       style Slides
-        [ cursor "e-resize"
-        ]
+        []
     ]
 
 
@@ -112,7 +112,7 @@ headers =
         [ Border.bottom 1
         , Border.solid
         , Color.border colorDerivatives.border
-        , Color.text colorDerivatives.border
+        , Color.text colors.base01
         , Font.center
         , Font.size (scaled 5)
         , Font.typeface [ headerFont, Font.sansSerif ]

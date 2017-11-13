@@ -44,12 +44,27 @@ content =
     --
     --
     , """
-      What if I want a working app,
-      but also nice valid code?
+      So you probably know what React is,
+      but what about Elm?
+
+      Elm is a functional language
+      that compiles to javascript.
+
+      Unlike using React,
+      Elm produces almost no runtime errors.
+      """
+        |> regularText
+
+    --
+    --
+    , """
+      How would I setup a simple app
+      with nice valid code?
 
       <React>
       Babel + ESLint
       Webpack + PostCSS
+      Redux
 
       [Elm]
       One or two small libraries
@@ -60,24 +75,26 @@ content =
     --
     --
     , """
-      # React
-      # =====
+      -----------
+      -- React --
+      -----------
 
       brew install nodejs
 
-      npm install react react-dom lodash
+      npm install react react-dom react-redux redux lodash
       npm install babel eslint eslint-config-metalab
       npm install postcss webpack webpack-dev-server
       npm install loader-a loader-b loader-c ...
 
-      # Elm
-      # ===
+      ---------
+      -- Elm --
+      ---------
 
       brew install elm
       brew install devd
       brew install watchexec
 
-      # Pick one
+      {- Pick one -}
       elm package install rtfeldman/elm-css
       elm package install mdgriffith/style-elements
       """
@@ -89,6 +106,115 @@ content =
       Elm is easier
       to setup and has
       less to configure
+      """
+        |> bigText
+
+    --
+    --
+    , """
+      What would a super simple app look like?
+      """
+        |> regularText
+
+    --
+    --
+    , """
+      // React Component
+
+      const App = connect(
+        state => state
+      )(
+        props => {
+          const action          = { type: "CHANGE_GREETING", greeting: "👩\x200D🔬" };
+          const changeGreeting  = () => props.dispatch(action);
+
+          return <p onClick={changeGreeting}>{props.user.greeting}</p>;
+        }
+      );
+
+
+
+      // State
+
+      const initialState = {
+        greeting: "👨\x200D🚀"
+      };
+
+
+      const reducers = {
+        user: (state = initialState, { greeting, type }) => {
+          switch (type) {
+            case "CHANGE_GREETING":     return { ...state, greeting };
+            default:                    return state;
+          }
+        }
+      };
+
+
+
+      // Render
+
+      render(
+        <Provider store={createStore(reducers)}>
+          <App />
+        </Provider>,
+        document.body
+      );
+      """
+        |> javascriptCode
+
+    --
+    --
+    , """
+      -- Elm View
+
+      view : Model -> Html Msg
+      view model =
+          p
+              [ onClick (ChangeGreeting "👩\x200D🔬") ]
+              [ text model.greeting ]
+
+
+
+      -- State
+
+      type Model =
+          { greeting : String }
+
+
+      type Msg
+          = ChangeGreeting String
+
+
+      initialModel : Model
+      initialModel =
+          { greeting = "👨\x200D🚀" }
+
+
+      update : Msg -> Model -> (Model, Cmd Msg)
+      update msg model =
+          case msg of
+              ChangeGreeting greeting ->
+                  (!) { model | greeting = greeting } []
+
+
+
+      -- Render
+
+      Html.program
+          { init = (initialModel, Cmd.none)
+          , view = view
+          , update = update
+          , subscriptions = \\_ -> Sub.none
+          }
+      """
+        |> elmCode
+
+    --
+    --
+    , """
+      Elm definitely looks
+      simpler & easier
       """
         |> bigText
 
@@ -144,6 +270,8 @@ content =
       - Types (Maybe type instead of undefined/null)
 
       Bad:
+      - No native string interpolation
+      (you need to use a function)
       - No server-side rendering
       (soon though, next version)
       """
@@ -211,8 +339,7 @@ code hcode =
     hcode
         |> SyntaxHighlight.toBlockHtml Nothing
         |> Element.html
-        |> inTheMiddle
-        |> section Code [ height fill, padding (scaled 2), width fill ]
+        |> section Code [ height fill, padding (scaled 4), width fill ]
 
 
 trimCode : String -> String
@@ -220,7 +347,7 @@ trimCode string =
     string
         |> String.lines
         |> List.drop 1
-        |> List.map String.trim
+        |> List.map (String.dropLeft 6)
         |> String.join "\n"
 
 

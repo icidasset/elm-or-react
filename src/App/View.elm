@@ -5,6 +5,7 @@ import Element.Attributes exposing (..)
 import Element.Events exposing (onClick)
 import Html exposing (Html)
 import Styles exposing (..)
+import SyntaxTheme
 import Types exposing (..)
 import Variables exposing (scaled)
 
@@ -19,7 +20,7 @@ import Slides.Content
 
 entry : Model -> Html Msg
 entry model =
-    [ top, middle, bottom ]
+    [ top, middle, bottom, syntaxTheme ]
         |> List.map (\fn -> fn model)
         |> column Root [ height fill, padding (scaled 4) ]
         |> viewport Styles.styles
@@ -51,7 +52,7 @@ middle model =
             |> List.drop slideIndex
             |> List.head
             |> Maybe.withDefault Element.empty
-            |> section Slides [ height fill, onClick GoToNextSlide, paddingTop (scaled 4) ]
+            |> section Slides [ height fill, padding (scaled 4) ]
 
 
 
@@ -61,3 +62,12 @@ middle model =
 bottom : Model -> Element Styles Variations Msg
 bottom _ =
     empty
+
+
+
+-- Other stuff
+
+
+syntaxTheme : Model -> Element Styles Variations Msg
+syntaxTheme _ =
+    html (Html.node "style" [] [ Html.text SyntaxTheme.theme ])

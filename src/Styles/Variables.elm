@@ -39,7 +39,7 @@ colors =
 
 
 colorDerivatives =
-    { border = colors.base01
+    { border = colors.base02
     , text = colors.base06
     }
 
