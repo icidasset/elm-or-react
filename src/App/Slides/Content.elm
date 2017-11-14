@@ -215,7 +215,7 @@ content =
     --
     --
     , """
-      Elm looks & is simpler
+      Elm is simpler
       """
         |> bigText
 
