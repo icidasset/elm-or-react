@@ -103,9 +103,8 @@ content =
     --
     --
     , """
-      Elm is easier
-      to setup and has
-      less to configure
+      Elm has less to setup
+      and less to configure
       """
         |> bigText
 
@@ -215,7 +214,8 @@ content =
     --
     --
     , """
-      Elm is simpler
+      React is flexible
+      Elm is strict
       """
         |> bigText
 
@@ -234,9 +234,41 @@ content =
         |> regularText
 
     --
+    -- "https://cdn-images-1.medium.com/max/1600/1*PnXjacg1e5nIQ3v9eO4-MQ.png"
     --
-    , "https://cdn-images-1.medium.com/max/1600/1*PnXjacg1e5nIQ3v9eO4-MQ.png"
-        |> image
+    , """
+      -- MISSING PATTERNS ---------------------------------------- ./src/App/State.elm
+
+      This `case` does not have branches for all possibilities.
+
+      46|>    case msg of
+      47|>        -----------------------------------
+      48|>        -- Other
+      49|>        -----------------------------------
+      50|>        NoOp ->
+      51|>            (!) model []
+
+      You need to account for the following values:
+
+          Types.GoToNextSlide
+          Types.GoToPreviousSlide
+
+      Add branches to cover each of these patterns!
+
+      If you are seeing this error for the first time, check out these hints:
+      <https://github.com/elm-lang/elm-compiler/blob/0.18.0/hints/missing-patterns.md>
+      The recommendations about wildcard patterns and `Debug.crash` are important!
+
+      Detected errors in 1 module.
+      """
+        |> trimCode
+        |> text
+        |> section Code
+            [ height fill
+            , paddingBottom (scaled 4)
+            , paddingTop (scaled 4)
+            , width fill
+            ]
 
     --
     --
