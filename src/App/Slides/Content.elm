@@ -196,8 +196,7 @@ content =
       update msg model =
           case msg of
               ChangeGreeting greeting ->
-                  (!) { model | greeting = greeting } []
-
+                  (,) { model | greeting = greeting } Cmd.none
 
 
       -- Render
