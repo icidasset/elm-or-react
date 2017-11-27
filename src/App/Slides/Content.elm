@@ -213,8 +213,8 @@ content =
     --
     --
     , """
-      React is flexible
-      Elm is strict
+      Elm is easier
+      to think about?
       """
         |> bigText
 
@@ -348,6 +348,7 @@ content =
       - Immutability
       - Pure functions (no side effects)
       - Types (Maybe type instead of undefined/null)
+      - Pattern matching
 
       Bad:
       - No native string interpolation
