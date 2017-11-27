@@ -33,7 +33,7 @@ content =
     , """
       Disclaimer:
 
-      These are my opinions,
+      This is fairly opionated,
       feel free to disagree and comment.
 
       Even if there's only a single thing

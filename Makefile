@@ -22,7 +22,7 @@ clean:
 
 html:
 	@echo "> Compiling HTML"
-	@cp -rf $(SRC_DIR)/Html $(BUILD_DIR)
+	@cp -rf $(SRC_DIR)/Html/ $(BUILD_DIR)
 
 
 elm:

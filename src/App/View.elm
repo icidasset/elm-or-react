@@ -31,7 +31,7 @@ entry model =
 rootAttributes : List (Attribute Variations Msg)
 rootAttributes =
     [ height fill
-    , padding (scaled 4)
+    , paddingXY (scaled 5) (scaled 4)
     ]
 
 
