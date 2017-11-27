@@ -11,11 +11,11 @@
   <script src="application.js"></script>
   <script>
     const key = "model";
-    const mod = JSON.parse(sessionStorage.getItem(key));
-    const app = Elm.App.fullscreen(mod);
+    const int = JSON.parse(sessionStorage.getItem(key));
+    const app = Elm.App.fullscreen({ slide: int });
 
-    app.ports.saveModel.subscribe(mod => {
-      sessionStorage.setItem(key, JSON.stringify(mod));
+    app.ports.saveSlideNumber.subscribe(integer => {
+      sessionStorage.setItem(key, JSON.stringify(integer));
     });
   </script>
 </body>

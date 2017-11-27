@@ -6,4 +6,4 @@ import Types exposing (Model)
 -- 💡
 
 
-port saveModel : Model -> Cmd msg
+port saveSlideNumber : Int -> Cmd msg

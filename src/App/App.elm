@@ -6,7 +6,7 @@ import Types exposing (..)
 import View
 
 
-main : Program (Maybe Model) Model Msg
+main : Program Flags Model Msg
 main =
     Html.programWithFlags
         { init = init
@@ -16,8 +16,8 @@ main =
         }
 
 
-init : Maybe Model -> ( Model, Cmd Msg )
-init maybeModelFromStorage =
-    ( Maybe.withDefault State.initialModel maybeModelFromStorage
+init : Flags -> ( Model, Cmd Msg )
+init flags =
+    ( State.initialModel flags
     , State.initialCommand
     )

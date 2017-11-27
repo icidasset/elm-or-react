@@ -2,16 +2,19 @@ module State exposing (..)
 
 import Keyboard
 import Ports
-import Slides.Content
+import Slides.Numbers
+import Touch exposing (isLeftSwipe, isRightSwipe)
 import Types exposing (..)
 
 
 -- 💧
 
 
-initialModel : Model
-initialModel =
-    { slide = 1 }
+initialModel : Flags -> Model
+initialModel flags =
+    { gesture = Touch.blanco
+    , slide = Maybe.withDefault 1 flags.slide
+    }
 
 
 initialCommand : Cmd Msg
@@ -37,47 +40,69 @@ updateWithMessage msg model =
         -- Navigation
         -----------------------------------
         GoToNextSlide ->
-            (!) { model | slide = nextSlideNumber model.slide } []
+            { model | slide = Slides.Numbers.next model.slide } ! []
 
         GoToPreviousSlide ->
-            (!) { model | slide = previousSlideNumber model.slide } []
+            { model | slide = Slides.Numbers.prev model.slide } ! []
+
+        -----------------------------------
+        -- Touch events
+        -----------------------------------
+        Swipe touch ->
+            let
+                gesture : Touch.Gesture
+                gesture =
+                    Touch.record touch model.gesture
+            in
+                { model | gesture = gesture } ! []
+
+        SwipeEnd touch ->
+            let
+                gesture : Touch.Gesture
+                gesture =
+                    Touch.record touch model.gesture
+
+                newSlideNumber : Int
+                newSlideNumber =
+                    if isRightSwipe touchSensitivity gesture then
+                        Slides.Numbers.prev model.slide
+                    else if isLeftSwipe touchSensitivity gesture then
+                        Slides.Numbers.next model.slide
+                    else
+                        model.slide
+            in
+                { model | gesture = Touch.blanco, slide = newSlideNumber } ! []
 
         -----------------------------------
         -- Other
         -----------------------------------
         NoOp ->
-            (!) model []
+            model ! []
 
 
 
--- 🔥 / Utilities
+-- 🔥 / Constants
 
 
-previousSlideNumber : Int -> Int
-previousSlideNumber currentNumber =
-    -- Go to the end if we reached the beginning
-    if currentNumber - 1 < 1 then
-        currentNumber
-    else
-        currentNumber - 1
+{-| How much pixels do we need to swipe
+to go to the previous or next slide?
+-}
+touchSensitivity : Float
+touchSensitivity =
+    250
 
 
-nextSlideNumber : Int -> Int
-nextSlideNumber currentNumber =
-    -- Go back to the beginning if we reached the end
-    if currentNumber + 1 > List.length Slides.Content.content then
-        currentNumber
-    else
-        currentNumber + 1
+
+-- 🔥 / Post Processing
 
 
+{-| Save the slide number in the session storage,
+but only if it's changed since last time.
+-}
 saveModelIfNecessary : Model -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
 saveModelIfNecessary oldModel ( newModel, command ) =
-    -- If something's changed,
-    -- save the new state in sessionStorage.
-    -- (see `index.html` file)
-    if newModel /= oldModel then
-        (!) newModel [ command, Ports.saveModel newModel ]
+    if newModel.slide /= oldModel.slide then
+        (!) newModel [ command, Ports.saveSlideNumber newModel.slide ]
     else
         (!) newModel [ command ]
 

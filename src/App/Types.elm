@@ -1,5 +1,8 @@
 module Types exposing (..)
 
+import Touch
+
+
 -- Messages
 
 
@@ -7,6 +10,9 @@ type Msg
     = -- Navigation
       GoToNextSlide
     | GoToPreviousSlide
+      -- Touch events
+    | Swipe Touch.Event
+    | SwipeEnd Touch.Event
       -- ...
     | NoOp
 
@@ -16,7 +22,17 @@ type Msg
 
 
 type alias Model =
-    { slide : Int }
+    { gesture : Touch.Gesture
+    , slide : Int
+    }
+
+
+
+-- Program Flags
+
+
+type alias Flags =
+    { slide : Maybe Int }
 
 
 

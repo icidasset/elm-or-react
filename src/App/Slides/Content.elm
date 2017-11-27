@@ -370,25 +370,21 @@ content =
 -- ⚗️
 
 
+inTheMiddle : Element Styles Variations Msg -> Element Styles Variations Msg
+inTheMiddle =
+    section Zed [ center, verticalCenter ]
+
+
+
+-- ⚗️ / Text
+
+
 bigText : String -> Element Styles Variations Msg
 bigText text =
     text
         |> properText
         |> h2 H2 [ vary Colored True ]
         |> inTheMiddle
-
-
-image : String -> Element Styles Variations Msg
-image url =
-    Element.image
-        Zed
-        [ maxWidth fill ]
-        { caption = "Nice error message", src = url }
-
-
-inTheMiddle : Element Styles Variations Msg -> Element Styles Variations Msg
-inTheMiddle =
-    section Zed [ center, verticalCenter ]
 
 
 properText : String -> Element Styles Variations Msg

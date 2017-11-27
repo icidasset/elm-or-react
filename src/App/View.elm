@@ -7,6 +7,7 @@ import Html exposing (Html)
 import Slides.Content
 import Styles exposing (..)
 import SyntaxTheme
+import Touch
 import Types exposing (..)
 import Variables exposing (scaled)
 
@@ -23,8 +24,20 @@ entry : Model -> Html Msg
 entry model =
     [ top, middle, bottom, syntaxTheme ]
         |> List.map (\fn -> fn model)
-        |> column Root [ height fill, padding (scaled 4) ]
+        |> column Root rootAttributes
         |> viewport Styles.styles
+
+
+rootAttributes : List (Attribute Variations Msg)
+rootAttributes =
+    [ height fill
+    , padding (scaled 4)
+
+    -- Touch events
+    , toAttr (Touch.onStart Swipe)
+    , toAttr (Touch.onMove Swipe)
+    , toAttr (Touch.onEnd SwipeEnd)
+    ]
 
 
 
