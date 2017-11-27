@@ -52,7 +52,7 @@ top model =
         title =
             "Elm or React"
                 |> text
-                |> h1 H1 [ center, paddingBottom (scaled 4), width fill ]
+                |> h1 H1 [ center, paddingBottom (scaled 3), width fill ]
 
         next =
             navButton
@@ -124,6 +124,7 @@ navButton requirement label alignment msg =
                     Right ->
                         alignRight
                 , onClick msg
+                , vary SlightySmaller True
                 ]
     else
         empty

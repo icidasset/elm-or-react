@@ -68,5 +68,5 @@ headerFont : Font
 headerFont =
     Font.importUrl
         { name = "Spectral SC"
-        , url = "https://fonts.googleapis.com/css?family=Spectral+SC:500"
+        , url = "https://fonts.googleapis.com/css?family=Spectral+SC:400,600"
         }

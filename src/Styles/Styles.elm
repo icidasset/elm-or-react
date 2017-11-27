@@ -47,6 +47,7 @@ type Styles
 
 type Variations
     = Colored
+    | SlightySmaller
       --
     | Default
 
@@ -127,34 +128,47 @@ containers =
 
 headers : List (Style Styles Variations)
 headers =
-    [ -----------------------------------
-      -- H1
-      -----------------------------------
-      style H1
-        [ Color.text colors.base01
-        , Font.center
-        , Font.size (scaled 2)
-        , Font.typeface [ headerFont, Font.sansSerif ]
-        , Font.weight 500
-        ]
-    , -----------------------------------
-      -- H2
-      -----------------------------------
-      style H2
-        [ Color.text colors.base05
-        , Font.lineHeight 1.05
-        , Font.size (scaled 13)
+    let
+        h1_lineHeight =
+            1.75
+    in
+        [ -----------------------------------
+          -- H1
+          -----------------------------------
+          style H1
+            [ Color.text colors.base01
+            , Font.center
+            , Font.letterSpacing -0.45
+            , Font.lineHeight h1_lineHeight
+            , Font.size (scaled 2)
+            , Font.typeface [ headerFont, Font.sansSerif ]
+            , Font.weight 600
 
-        --
-        , variation Colored
-            [ Color.text colors.base08 ]
+            --
+            , variation SlightySmaller
+                [ Font.lineHeight (h1_lineHeight * 1.125)
+                , Font.size (scaled 1)
+                , Font.weight 400
+                ]
+            ]
+        , -----------------------------------
+          -- H2
+          -----------------------------------
+          style H2
+            [ Color.text colors.base05
+            , Font.lineHeight 1.05
+            , Font.size (scaled 13)
+
+            --
+            , variation Colored
+                [ Color.text colors.base08 ]
+            ]
+        , -----------------------------------
+          -- H3
+          -----------------------------------
+          style H3
+            [ Color.text colors.base05
+            , Font.lineHeight 1.05
+            , Font.size (scaled 9)
+            ]
         ]
-    , -----------------------------------
-      -- H3
-      -----------------------------------
-      style H3
-        [ Color.text colors.base05
-        , Font.lineHeight 1.05
-        , Font.size (scaled 9)
-        ]
-    ]
