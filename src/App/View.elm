@@ -32,11 +32,6 @@ rootAttributes : List (Attribute Variations Msg)
 rootAttributes =
     [ height fill
     , padding (scaled 4)
-
-    -- Touch events
-    , toAttr (Touch.onStart Swipe)
-    , toAttr (Touch.onMove Swipe)
-    , toAttr (Touch.onEnd SwipeEnd)
     ]
 
 
@@ -86,7 +81,20 @@ middle model =
             |> List.drop slideIndex
             |> List.head
             |> Maybe.withDefault Element.empty
-            |> section Slides [ height fill, paddingBottom (scaled 4), paddingTop (scaled 4) ]
+            |> section Slides middleAttributes
+
+
+middleAttributes : List (Attribute Variations Msg)
+middleAttributes =
+    [ height fill
+    , paddingBottom (scaled 4)
+    , paddingTop (scaled 4)
+
+    -- Touch events
+    , toAttr (Touch.onStart Swipe)
+    , toAttr (Touch.onMove Swipe)
+    , toAttr (Touch.onEnd SwipeEnd)
+    ]
 
 
 
