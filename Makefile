@@ -42,8 +42,8 @@ dev: build
 
 
 serve:
-	@echo "> Serving"
-	@devd --livewatch --quiet --notfound 404.html --all $(BUILD_DIR)
+	@echo "> Serving on port 8000"
+	@devd --livewatch --quiet --port 8000 --notfound 404.html --all $(BUILD_DIR)
 
 
 watch:

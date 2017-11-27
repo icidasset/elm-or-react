@@ -15,7 +15,10 @@ import Variables exposing (..)
 styles : StyleSheet Styles Variations
 styles =
     Style.styleSheet
-        [ Sheet.mix basics
+        [ root
+
+        --
+        , Sheet.mix basics
         , Sheet.mix containers
         , Sheet.mix headers
         ]
@@ -26,12 +29,13 @@ styles =
 
 
 type Styles
-    = -- Basics
-      Clickable
+    = -- 🚀
+      Root
+      -- Basics
+    | Clickable
       -- Containers
     | Code
     | Header
-    | Root
     | Slides
       -- Headers
     | H1
@@ -45,6 +49,26 @@ type Variations
     = Colored
       --
     | Default
+
+
+
+-- 🚀
+
+
+root : Style Styles Variations
+root =
+    style Root
+        [ Color.background colors.base00
+        , Color.selection colors.base03
+        , Color.text colorDerivatives.text
+        , Font.lineHeight 1.575
+        , Font.size (scaled 1)
+        , Font.typeface [ defaultFont, Font.sansSerif ]
+
+        --
+        , prop "-webkit-font-smoothing" "antialiased"
+        , prop "-moz-font-smoothing" "grayscale"
+        ]
 
 
 
@@ -90,21 +114,6 @@ containers =
         , prop "user-select" "none"
         ]
     , -----------------------------------
-      -- Root
-      ------------------------------------
-      style Root
-        [ Color.background colors.base00
-        , Color.selection colors.base03
-        , Color.text colorDerivatives.text
-        , Font.lineHeight 1.575
-        , Font.size (scaled 1)
-        , Font.typeface [ defaultFont, Font.sansSerif ]
-
-        --
-        , prop "-webkit-font-smoothing" "antialiased"
-        , prop "-moz-font-smoothing" "grayscale"
-        ]
-    , -----------------------------------
       -- Slides
       -----------------------------------
       style Slides
@@ -124,8 +133,9 @@ headers =
       style H1
         [ Color.text colors.base01
         , Font.center
-        , Font.size (scaled 5)
+        , Font.size (scaled 2)
         , Font.typeface [ headerFont, Font.sansSerif ]
+        , Font.weight 500
         ]
     , -----------------------------------
       -- H2
@@ -134,11 +144,10 @@ headers =
         [ Color.text colors.base05
         , Font.lineHeight 1.05
         , Font.size (scaled 13)
-        , Font.typeface [ headerFont, Font.sansSerif ]
 
         --
         , variation Colored
-            [ Color.text colors.base0B ]
+            [ Color.text colors.base08 ]
         ]
     , -----------------------------------
       -- H3
@@ -147,6 +156,5 @@ headers =
         [ Color.text colors.base05
         , Font.lineHeight 1.05
         , Font.size (scaled 9)
-        , Font.typeface [ headerFont, Font.sansSerif ]
         ]
     ]

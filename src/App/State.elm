@@ -11,23 +11,12 @@ import Types exposing (..)
 
 initialModel : Model
 initialModel =
-    { slide = 1
-    , title = startingTitle
-    }
+    { slide = 1 }
 
 
 initialCommand : Cmd Msg
 initialCommand =
     Cmd.none
-
-
-
--- 💧 / Initial states
-
-
-startingTitle : String
-startingTitle =
-    "Elm or React"
 
 
 

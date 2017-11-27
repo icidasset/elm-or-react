@@ -59,14 +59,14 @@ codingFont =
 defaultFont : Font
 defaultFont =
     Font.importUrl
-        { name = "Nunito Sans"
-        , url = "https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,400i,700,900"
+        { name = "Permanent Marker"
+        , url = "https://fonts.googleapis.com/css?family=Permanent+Marker"
         }
 
 
 headerFont : Font
 headerFont =
     Font.importUrl
-        { name = "Permanent Marker"
-        , url = "https://fonts.googleapis.com/css?family=Permanent+Marker"
+        { name = "Spectral SC"
+        , url = "https://fonts.googleapis.com/css?family=Spectral+SC:500"
         }

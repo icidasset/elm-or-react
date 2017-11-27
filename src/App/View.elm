@@ -37,19 +37,19 @@ top model =
         prev =
             navButton
                 (model.slide > 1)
-                "Previous"
+                "previous"
                 Left
                 GoToPreviousSlide
 
         title =
-            model.title
+            "Elm or React"
                 |> text
                 |> h1 H1 [ center, paddingBottom (scaled 4), width fill ]
 
         next =
             navButton
                 (model.slide < List.length Slides.Content.content)
-                "Next"
+                "next"
                 Right
                 GoToNextSlide
     in
@@ -95,7 +95,7 @@ navButton requirement label alignment msg =
         label
             |> text
             |> el Clickable []
-            |> h1 H1
+            |> el H1
                 [ case alignment of
                     Left ->
                         alignLeft
