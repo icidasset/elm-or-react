@@ -151,7 +151,7 @@ content =
 
 
 
-      // Render
+      // Join Forces
 
       render(
         <Provider store={createStore(reducers)}>
@@ -199,7 +199,8 @@ content =
                   (,) { model | greeting = greeting } Cmd.none
 
 
-      -- Render
+
+      -- Join Forces
 
       Html.program
           { init = (initialModel, Cmd.none)
