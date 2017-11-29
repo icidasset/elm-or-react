@@ -3,6 +3,7 @@ module Slides.Content exposing (content)
 import Element exposing (..)
 import Element.Attributes exposing (..)
 import List exposing (singleton)
+import Slides.Samples
 import Styles exposing (..)
 import SyntaxHighlight
 import Types exposing (Msg)
@@ -102,7 +103,7 @@ content =
       {- Maybe, if you want external CSS -}
       npm install ...
       """
-        |> elmCode
+        |> elmCode defaultCodeOptions
 
     --
     --
@@ -121,106 +122,27 @@ content =
 
     --
     --
-    , """
-      // React Component
-
-      const App = connect(
-        // copy all redux state into props:
-        (state) => state,
-        // add "event handlers" to props:
-        actions
-      )(
-        (props) => {
-          return <p onClick={props.changeGreeting}>{props.greeting}</p>;
-        }
-      );
-
-
-      const actions = (dispatch) => {
-        return {
-          changeGreeting() {
-            return dispatch({ type: "CHANGE_GREETING", greeting: "👩\x200D🔬" });
-          }
-        };
-      };
-
-
-
-      // State
-
-      const initialState = {
-        greeting: "👨\x200D🚀"
-      };
-
-
-      const reducer = (state = initialState, { greeting, type }) => {
-        switch (type) {
-          case "CHANGE_GREETING":     return { ...state, greeting };
-          default:                    return state;
-        }
-      };
-
-
-
-      // Join Forces
-
-      render(
-        <Provider store={createStore(reducer)}>
-          <App />
-        </Provider>,
-        document.body
-      );
-      """
-        |> javascriptCode
+    , javascriptCode { leadingSpaces = 4 } Slides.Samples.react
 
     --
-    -- An Elm program will always have a structure
-    -- that is roughly in this form:
     --
-    , """
-      -- Elm View
+    , elmCode { leadingSpaces = 4 } Slides.Samples.elm
 
-      view : Model -> Html Msg
-      view model =
-          Html.p
-              [ onClick (ChangeGreeting "👩\x200D🔬") ]
-              [ text model.greeting ]
+    --
+    --
+    , row
+        Zed
+        [ clip, spacing (scaled 16) ]
+        [ -- React
+          Slides.Samples.reactSideBySide
+            |> javascriptCode { leadingSpaces = 4 }
+            |> el Zed [ xScrollbar, clipY, width (percent 50) ]
 
-
-
-      -- State
-
-      type Model =
-          { greeting : String }
-
-
-      type Msg
-          = ChangeGreeting String
-
-
-      initialModel : Model
-      initialModel =
-          { greeting = "👨\x200D🚀" }
-
-
-      update : Msg -> Model -> (Model, Cmd Msg)
-      update msg model =
-          case msg of
-              ChangeGreeting greeting ->
-                  (,) { model | greeting = greeting } Cmd.none
-
-
-
-      -- Join Forces
-
-      Html.program
-          { init = (initialModel, Cmd.none)
-          , view = view
-          , update = update
-          , subscriptions = \\_ -> Sub.none
-          }
-      """
-        |> elmCode
+        -- Elm
+        , Slides.Samples.elmSideBySide
+            |> elmCode { leadingSpaces = 4 }
+            |> el Zed [ xScrollbar, clipY, width (percent 50) ]
+        ]
 
     --
     --
@@ -248,7 +170,7 @@ content =
             <script src="compiled-elm-code.js"></script>
             <script>
           """
-            |> xmlCode
+            |> xmlCode defaultCodeOptions
 
         --
         , """
@@ -256,7 +178,7 @@ content =
             var containerNode = document.body.querySelector("#elm-app-container");
             var app = Elm.App.embed(containerNode);
           """
-            |> javascriptCode
+            |> javascriptCode defaultCodeOptions
 
         --
         , """
@@ -264,7 +186,7 @@ content =
           </body>
           </html>
           """
-            |> xmlCode
+            |> xmlCode defaultCodeOptions
         ]
 
     --
@@ -308,7 +230,7 @@ content =
 
       Detected errors in 1 module.
       """
-        |> nonHighlightedCode
+        |> nonHighlightedCode defaultCodeOptions
 
     --
     --
@@ -327,7 +249,7 @@ content =
       <React>
       With difficulty,
       you will definitely miss something
-      and probably need new tests.
+      and might need new tests.
 
       [Elm]
       Continue until the compiler
@@ -457,6 +379,10 @@ regularText text =
 -- ⚗️ / Code
 
 
+type alias CodeOptions =
+    { leadingSpaces : Int }
+
+
 code : SyntaxHighlight.HCode -> Element Styles Variations Msg
 code hcode =
     hcode
@@ -470,12 +396,17 @@ code hcode =
             ]
 
 
-trimCode : String -> String
-trimCode string =
+defaultCodeOptions : CodeOptions
+defaultCodeOptions =
+    { leadingSpaces = 6 }
+
+
+trimCode : CodeOptions -> String -> String
+trimCode options string =
     string
         |> String.lines
         |> List.drop 1
-        |> List.map (String.dropLeft 6)
+        |> List.map (String.dropLeft options.leadingSpaces)
         |> String.join "\n"
 
 
@@ -485,20 +416,21 @@ trimCode string =
 
 highlightedCode :
     (String -> Result parserError SyntaxHighlight.HCode)
+    -> CodeOptions
     -> String
     -> Element Styles Variations Msg
-highlightedCode highlighter string =
+highlightedCode highlighter options string =
     string
-        |> trimCode
+        |> trimCode options
         |> highlighter
         |> Result.map code
         |> Result.withDefault Element.empty
 
 
-nonHighlightedCode : String -> Element Styles Variations Msg
-nonHighlightedCode string =
+nonHighlightedCode : CodeOptions -> String -> Element Styles Variations Msg
+nonHighlightedCode options string =
     string
-        |> trimCode
+        |> trimCode options
         |> text
         |> section Code
             [ height fill
@@ -512,16 +444,16 @@ nonHighlightedCode string =
 -- ⚗️ / Code kinds, Pt. 2
 
 
-elmCode : String -> Element Styles Variations Msg
+elmCode : CodeOptions -> String -> Element Styles Variations Msg
 elmCode =
     highlightedCode SyntaxHighlight.elm
 
 
-javascriptCode : String -> Element Styles Variations Msg
+javascriptCode : CodeOptions -> String -> Element Styles Variations Msg
 javascriptCode =
     highlightedCode SyntaxHighlight.javascript
 
 
-xmlCode : String -> Element Styles Variations Msg
+xmlCode : CodeOptions -> String -> Element Styles Variations Msg
 xmlCode =
     highlightedCode SyntaxHighlight.xml
