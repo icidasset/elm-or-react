@@ -244,6 +244,7 @@ content =
             <title>Elm app</title>
           </head>
           <body>
+            <div id="elm-app-container"></div>
             <script src="compiled-elm-code.js"></script>
             <script>
           """
@@ -281,7 +282,6 @@ content =
         |> regularText
 
     --
-    -- "https://cdn-images-1.medium.com/max/1600/1*PnXjacg1e5nIQ3v9eO4-MQ.png"
     --
     , """
       -- MISSING PATTERNS ---------------------------------------- ./src/App/State.elm
@@ -368,6 +368,8 @@ content =
 
       <React>
       shouldComponentUpdate
+      PureComponent
+      memoized selectors (reselect)
 
       [Elm]
       Html.Keyed for lists
