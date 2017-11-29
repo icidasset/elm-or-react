@@ -12,7 +12,7 @@ react =
       // copy all redux state into props:
       (state) => state,
       // add "event handlers" to props:
-      actions
+      actionPerformers
     )(
       (props) => {
         return <p onClick={props.changeGreeting}>{props.greeting}</p>;
@@ -20,7 +20,7 @@ react =
     );
 
 
-    const actions = (dispatch) => {
+    const actionPerformers = (dispatch) => {
       return {
         changeGreeting() {
           return dispatch({ type: "CHANGE_GREETING", greeting: "👩\x200D🔬" });
@@ -66,7 +66,7 @@ reactSideBySide =
       // copy all redux state into props:
       (state) => state,
       // add "event handlers" to props:
-      actions
+      actionPerformers
     )(
       (props) => {
         return <p onClick={props.changeGreeting}>{props.greeting}</p>;
@@ -74,7 +74,7 @@ reactSideBySide =
     );
 
 
-    const actions = (dispatch) => {
+    const actionPerformers = (dispatch) => {
       return {
         changeGreeting() {
           return dispatch({ type: "CHANGE_GREETING", greeting: "👩\x200D🔬" });
