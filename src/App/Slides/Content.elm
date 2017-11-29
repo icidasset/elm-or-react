@@ -125,7 +125,7 @@ content =
       // React Component
 
       const App = connect(
-        // copy all state into props:
+        // copy all redux state into props:
         (state) => state,
         // add "event handlers" to props:
         actions
