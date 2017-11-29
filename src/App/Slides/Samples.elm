@@ -14,17 +14,18 @@ react =
       // add "event handlers" to props:
       mapDispatch
     )(
-      (props) => {
-        return <p onClick={props.changeGreeting}>{props.greeting}</p>;
-      }
+      (props) => <p onClick={props.changeGreeting}>
+        {props.greeting}
+      </p>
     );
 
 
     const mapDispatch = (dispatch) => {
       return {
-        changeGreeting() {
-          return dispatch({ type: "CHANGE_GREETING", greeting: "👩\x200D🔬" });
-        }
+        changeGreeting: () => dispatch({
+          type: "CHANGE_GREETING",
+          greeting: "👩\x200D🔬"
+        })
       };
     };
 
@@ -68,17 +69,18 @@ reactSideBySide =
       // add "event handlers" to props:
       mapDispatch
     )(
-      (props) => {
-        return <p onClick={props.changeGreeting}>{props.greeting}</p>;
-      }
+      (props) => <p onClick={props.changeGreeting}>
+        {props.greeting}
+      </p>
     );
 
 
     const mapDispatch = (dispatch) => {
       return {
-        changeGreeting() {
-          return dispatch({ type: "CHANGE_GREETING", greeting: "👩\x200D🔬" });
-        }
+        changeGreeting: () => dispatch({
+          type: "CHANGE_GREETING",
+          greeting: "👩\x200D🔬"
+        })
       };
     };
 
@@ -179,6 +181,7 @@ elmSideBySide =
         Html.p
             [ onClick (ChangeGreeting "👩\x200D🔬") ]
             [ text model.greeting ]
+
 
 
 
