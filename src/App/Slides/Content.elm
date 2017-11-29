@@ -67,7 +67,7 @@ content =
       Redux
 
       [Elm]
-      One or two small libraries
+      two or three small libraries
       for HTML & CSS
       """
         |> regularText
@@ -84,7 +84,8 @@ content =
       npm install react react-dom react-redux redux lodash
       npm install babel eslint eslint-config-metalab
       npm install postcss webpack webpack-dev-server
-      npm install loader-a loader-b loader-c ...
+      npm install loader-a loader-b loader-c
+      ...
 
       ---------
       -- Elm --
@@ -94,9 +95,12 @@ content =
       brew install devd
       brew install watchexec
 
-      {- Pick one -}
+      {- Pick one you like -}
       elm package install rtfeldman/elm-css
       elm package install mdgriffith/style-elements
+
+      {- Maybe, if you want external CSS -}
+      npm install ...
       """
         |> elmCode
 
@@ -121,15 +125,24 @@ content =
       // React Component
 
       const App = connect(
-        state => state
+        // copy all state into props:
+        (state) => state,
+        // add "event handlers" to props:
+        actions
       )(
-        props => {
-          const action          = { type: "CHANGE_GREETING", greeting: "👩\x200D🔬" };
-          const changeGreeting  = () => props.dispatch(action);
-
-          return <p onClick={changeGreeting}>{props.user.greeting}</p>;
+        (props) => {
+          return <p onClick={props.changeGreeting}>{props.greeting}</p>;
         }
       );
+
+
+      const actions = (dispatch) => {
+        return {
+          changeGreeting() {
+            return dispatch({ type: "CHANGE_GREETING", greeting: "👩\x200D🔬" });
+          }
+        };
+      };
 
 
 
@@ -140,12 +153,10 @@ content =
       };
 
 
-      const reducers = {
-        user: (state = initialState, { greeting, type }) => {
-          switch (type) {
-            case "CHANGE_GREETING":     return { ...state, greeting };
-            default:                    return state;
-          }
+      const reducer = (state = initialState, { greeting, type }) => {
+        switch (type) {
+          case "CHANGE_GREETING":     return { ...state, greeting };
+          default:                    return state;
         }
       };
 
@@ -154,7 +165,7 @@ content =
       // Join Forces
 
       render(
-        <Provider store={createStore(reducers)}>
+        <Provider store={createStore(reducer)}>
           <App />
         </Provider>,
         document.body
@@ -221,6 +232,42 @@ content =
 
     --
     --
+    , column
+        Zed
+        []
+        [ --
+          """
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>Elm app</title>
+          </head>
+          <body>
+            <script src="compiled-elm-code.js"></script>
+            <script>
+          """
+            |> xmlCode
+
+        --
+        , """
+            // Start Elm application and render the output into this node
+            var containerNode = document.body.querySelector("#elm-app-container");
+            var app = Elm.App.embed(containerNode);
+          """
+            |> javascriptCode
+
+        --
+        , """
+            </script>
+          </body>
+          </html>
+          """
+            |> xmlCode
+        ]
+
+    --
+    --
     , """
       What if I made an important typo,
       when would I usually find out about it?
@@ -261,14 +308,7 @@ content =
 
       Detected errors in 1 module.
       """
-        |> trimCode
-        |> text
-        |> section Code
-            [ height fill
-            , paddingBottom (scaled 4)
-            , paddingTop (scaled 4)
-            , width fill
-            ]
+        |> nonHighlightedCode
 
     --
     --
@@ -438,22 +478,48 @@ trimCode string =
 
 
 
--- ⚗️ / Code kinds
+-- / Code kinds, Pt. 1
+
+
+highlightedCode :
+    (String -> Result parserError SyntaxHighlight.HCode)
+    -> String
+    -> Element Styles Variations Msg
+highlightedCode highlighter string =
+    string
+        |> trimCode
+        |> highlighter
+        |> Result.map code
+        |> Result.withDefault Element.empty
+
+
+nonHighlightedCode : String -> Element Styles Variations Msg
+nonHighlightedCode string =
+    string
+        |> trimCode
+        |> text
+        |> section Code
+            [ height fill
+            , paddingBottom (scaled 4)
+            , paddingTop (scaled 4)
+            , width fill
+            ]
+
+
+
+-- ⚗️ / Code kinds, Pt. 2
 
 
 elmCode : String -> Element Styles Variations Msg
-elmCode string =
-    string
-        |> trimCode
-        |> SyntaxHighlight.elm
-        |> Result.map code
-        |> Result.withDefault Element.empty
+elmCode =
+    highlightedCode SyntaxHighlight.elm
 
 
 javascriptCode : String -> Element Styles Variations Msg
-javascriptCode string =
-    string
-        |> trimCode
-        |> SyntaxHighlight.javascript
-        |> Result.map code
-        |> Result.withDefault Element.empty
+javascriptCode =
+    highlightedCode SyntaxHighlight.javascript
+
+
+xmlCode : String -> Element Styles Variations Msg
+xmlCode =
+    highlightedCode SyntaxHighlight.xml

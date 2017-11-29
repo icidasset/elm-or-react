@@ -19,6 +19,10 @@ scaled =
 
 
 colors =
+    darkColors
+
+
+darkColors =
     { base00 = rgb 41 45 62
     , base01 = rgb 68 66 103
     , base02 = rgb 50 55 77

@@ -32,6 +32,7 @@ rootAttributes : List (Attribute Variations Msg)
 rootAttributes =
     [ height fill
     , paddingXY (scaled 5) (scaled 4)
+    , scrollbars
     ]
 
 
