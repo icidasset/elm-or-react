@@ -285,7 +285,7 @@ content =
     --
     --
     , """
-      How do I go about optimizing my code?
+      How do I go about optimising my code?
       (ie. Please don't re-render every time)
 
       <React>
@@ -320,6 +320,13 @@ content =
       (you need to use a function)
       - No server-side rendering
       (soon though, next version)
+      """
+        |> regularText
+
+    --
+    --
+    , """
+      icidasset.com / writings / minimize-flaws
       """
         |> regularText
 
