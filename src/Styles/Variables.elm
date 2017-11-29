@@ -1,6 +1,7 @@
 module Variables exposing (..)
 
 import Color exposing (Color, rgb)
+import Color.Manipulate exposing (..)
 import Style exposing (Font)
 import Style.Font as Font
 import Style.Scale as Scale
@@ -18,12 +19,29 @@ scaled =
 -- Colors
 
 
+type Theme
+    = Dark
+    | Light
+
+
 colors =
-    darkColors
+    darkTheme
 
 
-darkColors =
-    { base00 = rgb 41 45 62
+colorDerivatives =
+    { text = colors.base06
+
+    --
+    , border = themeBased { dark = colors.base02, light = colors.base01 }
+    , subtle = themeBased { dark = colors.base01, light = colors.base02 }
+    }
+
+
+darkTheme =
+    { theme = Dark
+
+    --
+    , base00 = rgb 41 45 62
     , base01 = rgb 68 66 103
     , base02 = rgb 50 55 77
     , base03 = rgb 103 110 149
@@ -42,10 +60,40 @@ darkColors =
     }
 
 
-colorDerivatives =
-    { border = colors.base02
-    , text = colors.base06
+lightTheme =
+    { theme = Light
+
+    --
+    , base00 = rgb 247 249 251
+    , base01 = rgb 229 235 241
+    , base02 = rgb 203 214 226
+    , base03 = rgb 170 188 206
+    , base04 = rgb 98 126 153
+    , base05 = rgb 64 92 121
+    , base06 = rgb 34 59 84
+    , base07 = rgb 11 28 44
+    , base08 = rgb 255 83 112
+    , base09 = rgb 247 109 71
+    , base0A = rgb 255 182 44
+    , base0B = rgb 145 184 89
+    , base0C = rgb 57 173 181
+    , base0D = rgb 97 130 184
+    , base0E = rgb 124 77 255
+    , base0F = rgb 229 57 53
     }
+
+
+
+-- Colors / Utilities
+
+
+themeBased colorOptions =
+    case colors.theme of
+        Dark ->
+            colorOptions.dark
+
+        Light ->
+            colorOptions.light
 
 
 
@@ -72,5 +120,5 @@ headerFont : Font
 headerFont =
     Font.importUrl
         { name = "Spectral SC"
-        , url = "https://fonts.googleapis.com/css?family=Spectral+SC:400,600"
+        , url = "https://fonts.googleapis.com/css?family=Spectral+SC:400"
         }

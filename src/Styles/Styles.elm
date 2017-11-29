@@ -96,7 +96,7 @@ containers =
       -- Code
       -----------------------------------
       style Code
-        [ Color.text colors.base06
+        [ Color.text colorDerivatives.text
         , Font.lineHeight 1.425
         , Font.size (scaled 3)
         , Font.typeface [ codingFont, Font.monospace ]
@@ -136,13 +136,12 @@ headers =
           -- H1
           -----------------------------------
           style H1
-            [ Color.text colors.base01
+            [ Color.text colorDerivatives.subtle
             , Font.center
-            , Font.letterSpacing -0.45
+            , Font.letterSpacing -0.55
             , Font.lineHeight h1_lineHeight
             , Font.size (scaled 2)
             , Font.typeface [ headerFont, Font.sansSerif ]
-            , Font.weight 600
 
             --
             , variation SlightySmaller
@@ -155,7 +154,7 @@ headers =
           -- H2
           -----------------------------------
           style H2
-            [ Color.text colors.base05
+            [ Color.text colorDerivatives.text
             , Font.lineHeight 1.05
             , Font.size (scaled 13)
 
@@ -167,7 +166,7 @@ headers =
           -- H3
           -----------------------------------
           style H3
-            [ Color.text colors.base05
+            [ Color.text colorDerivatives.text
             , Font.lineHeight 1.05
             , Font.size (scaled 9)
             ]
